@@ -14,7 +14,5 @@ urlpatterns = [
     path('account/', include('django.contrib.auth.urls')),
     path('tools/', include('amazon.urls', namespace='amazon')),
     path('tools/todos/', include('todo.urls', namespace='todo')),
-    # url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), # to serve media
-    # path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

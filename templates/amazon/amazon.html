@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Amazon price tracker{% endblock %}
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/library/custom_style.css' %}">
+<div class="jumbotron jumbotron-fluid">
+	<div class="container">
+		<h1 class="display-4">Amazon price tracker</h1>
+        <p>"Either run the day or the day runs you." -Jim Rohn</p>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+ {% if messages %}
+  {% for message in messages %}
+  <div class="container">
+    <div class="alert alert-info" role="alert">
+      {{ message }}
+    </div>
+  </div>
+        {% endfor %}
+{% endif %}
+
+    <div align="center">
+<form method="post">
+{% csrf_token %}
+  <div class="form-group">
+    <label for="colFormLabel" class="col-sm-2 col-form-label">Product URL:</label>
+    <div class="col-sm-10">
+      <input type="text" name="url" class="form-control" id="colFormLabel" placeholder="Enter product URL" required>
+    </div>
+      <label for="colFormLabel"  class="col-sm-2 col-form-label">Email address:</label>
+      <div class="col-sm-10">
+      <input type="email" name="email" class="form-control" id="colFormLabel" placeholder="Enter your email address">
+    </div>
+      <label for="colFormLabel"  class="col-sm-2 col-form-label">Expected price:</label>
+      <div class="col-sm-10">
+      <input type="text" required name="price" class="form-control" id="colFormLabel" placeholder="e.g. $60">
+    </div>
+  </div>
+    <br><p align="center"><button style="background-color: #ea3a60; color: whitesmoke; border-radius: 4px;
+	 border-color: #ea3a60;" type="submit">Submit</button></p><br>
+</form>
+
+</div>
+
+{% endblock %}

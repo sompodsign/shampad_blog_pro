@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TODO's{% endblock %}
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/library/custom_style.css' %}">
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Todos</h1>
+      <p>“The only thing more important than your to-do list is your to-be list. The only thing more important than your to-be list is to be.”
+― Alan Cohen</p>
+  </div>
+</div>
+  {% endblock %}
+
+{% block content %}
+<div class="container pt-4 pb-lg-5">
+
+    <div class="row p-0 mt-4">
+        <div class="col-lg-4 mx-auto shadow p-0">
+            <div class="alert alert-info">
+                <h2>Add New TODO</h2>
+            </div>
+            <div class="p-3">
+                <div class="form-group">
+            <form action="add_todo" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr>
+                <input class="btn" style="background-color: #ea3a60; color: whitesmoke" type="submit" name="" id="" value="Add">
+            </form>
+                    </div>
+        </div>
+        </div>
+        <div class="col">
+            <div class="border rounded"">
+                {% if todos|length == 0 %}
+
+                <div class="p-4">
+                    <br>
+                    <br>
+                    <div class="alert alert-info text-center">
+                        <p class="" style="font-size: 30px;">NO TODOS</p>
+
+                    </div>
+                </div>
+
+                {% else %}
+                <div>
+                    <table  class="table">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Title</td>
+                                <td>Status</td>
+                                <td>Priority</td>
+                                <td>Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                {% for todo in todos %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ todo.title }}</td>
+                                <td>{{ todo.status }}</td>
+                                <td>{{ todo.priority }}</td>
+                                <td><a class="" title="Delete" href="delete_todo/{{ todo.id }}">🗑️</a>
+                                    {% if todo.status == 'P' %}
+                                    <a class="" title="Mark Pending" href="change_todo/{{ todo.id }}/C">✅</a>
+                                    {% else %}
+                                    <a class="" title="Mark Completed" href="change_todo/{{ todo.id }}/P">🕗</a>
+                                    {% endif %}
+                                    </td>
+                            </tr>
+                                {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<br><br><br>
+{% endblock %}

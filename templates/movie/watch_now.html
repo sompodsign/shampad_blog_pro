@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Movie Recommender{% endblock %}
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/library/custom_style.css' %}">
+<div class="jumbotron jumbotron-fluid">
+	<div class="container">
+		<h1 class="display-4">Movie recommender</h1>
+		<p class="lead">{{ quote }}</p>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'movie:custom-filter' %}" method="POST">
+	{% csrf_token %}
+	<div class="row">
+		<div class="col">
+			Release year
+			<div class="row">
+				<div class="col">
+					<input type="text" name="from-year" class="form-control form-control-sm" placeholder="From e.g 1996">
+				</div>
+				<div class="col"><input name="to-year" type="text" class="form-control form-control-sm" placeholder="To e.g 2018">
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			Genre
+			<select class="form-control form-control-sm" name="genre">
+				<option value="" disabled selected>Genre</option>
+				<option value="sci_fi" >Sci-Fi</option>
+				<option value="thriller" >Thriller</option>
+				<option value="action">Action</option>
+				<option value="adventure">Adventure</option>
+				<option value="animation" >Animation</option>
+				<option value="biography" >Biography</option>
+				<option value="comedy" >Comedy</option>
+				<option value="crime" >Crime</option>
+				<option value="documentary" >Documentary</option>
+				<option value="drama" >Drama</option>
+				<option value="fantasy" >Fantasy</option>
+				<option value="history" >History</option>
+				<option value="horror" >Horror</option>
+				<option value="mystery" >Mystery</option>
+
+			</select>
+		</div>
+		<div class="col">
+			Rating
+			<div class="row">
+				<div class="col">
+					<input type="text" name="from-rating" class="form-control form-control-sm" placeholder="From rating e.g. 7">
+				</div>
+				<div class="col">
+					<input name="to-rating" type="text" class="form-control form-control-sm" placeholder="To rating e.g. 9">
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><p align="center"><button style="background-color: #ea3a60; color: whitesmoke; border-radius: 4px;
+	 border-color: #ea3a60;" type="submit">Suggest movie</button></p><br>
+</form>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<style>
+	img {
+		-webkit-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+	}
+
+	img {
+		pointer-events: none;
+	}
+
+	.movie_card {
+		padding: 0 !important;
+		width: 15rem;
+		margin: 14px;
+		border-radius: 10px;
+		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	.movie_card img {
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		height: 20rem;
+	}
+
+	.movie_info {
+		color: #5e5c5c;
+	}
+
+	.movie_info i {
+		font-size: 20px;
+	}
+
+	.card-title {
+		width: 80%;
+		height: 4rem;
+	}
+
+	.play_button {
+		background-color: #ff3d49;
+		position: absolute;
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		right: 20px;
+		bottom: 111px;
+		font-size: 27px;
+		padding-left: 21px;
+		padding-top: 16px;
+		color: #FFFFFF;
+		cursor: pointer;
+	}
+</style>
+
+
+
+
+<div class="container d-flex justify-content-center">
+	<div class="card movie_card center">
+		<img src="{{ movie.poster }}" class="card-img-top" alt="...">
+		<div class="card-body">
+			<i class="fas fa-play play_button" data-toggle="modal" data-target=".bd-example-modal-xl"
+				data-placement="bottom" title="Play Trailer">
+			</i>
+			<h5 class="card-title">{{ movie.title|truncatechars:30 }}</h5>
+			<span class="movie_info">{{ movie.release_date }}</span>
+			<span class="movie_info float-right"><i class="fas fa-star"></i> {{ movie.rating }} / 10</span>
+		</div>
+
+
+	</div>
+
+</div>
+<p align="center"><a href="" class="btn btn-primary">Next</a></p><br>
+
+<!-- Extra large modal -->
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<iframe width="100%" height="720" src="https://www.youtube.com/embed/{{ movie.trailer }}" frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen></iframe>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

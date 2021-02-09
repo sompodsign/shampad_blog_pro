@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block nav %}
+  <!--  Main banner section -->
+  <section class="w3l-main-banner">
+    <div class="companies20-content">
+      <div class="companies-wrapper">
+        <div class="item">
+          <li>
+            <div class="slider-info banner-view">
+              <div class="banner-info container">
+                <h3 class="banner-text"><small>Hello There! I’m</small><br>
+                  Shampad Sharkar
+                </h3><br><br>
+                <p class="my-auto mb-auto">Automation Engineer</p><br><br>
+                <p class="my-auto mb-auto">Web Developer</p><br><br>
+                <p class="my-auto mb-auto">Web Scraper</p><br>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--  //Main banner section -->
+<br><h1 align="center">Recent posts on blog</h1><br>
+
+<div class="d-flex justify-content-center flex-wrap">
+  {% for post in posts %}
+      <a href="{{ post.get_absolute_url }}">
+<div class=" m-3 card" style="width: 18rem;">
+  <div class="card-body">
+
+    <h5 class="card-title">{{ post.title|title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ post.subheading|truncatechars:40 }}</h6>
+<!--    <p class="card-text">{{ post.body|striptags|truncatechars:50 }}</p>-->
+<!--    <button>Read</button>-->
+
+  </div>
+</div>
+        </a>
+  {% endfor %}
+</div>
+{% endblock %}
+ {% block content %}
+{% endblock %}

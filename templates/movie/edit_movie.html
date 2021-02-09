@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit item{% endblock %}
+
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/library/custom_style.css' %}">
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Edit item</h1>
+{#    <p class="lead">{{ quote }}</p>#}
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="form-group">
+    <form method="post">
+    {% csrf_token %}
+        {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+<a class="btn btn-danger" href="{% url "movie:delete_item" id %}">Delete</a>
+</div>
+
+
+{% endblock %}

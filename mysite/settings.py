@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '1^!!7!p_^grz+g-*c@j%1wxfq70ha-c2g!ctxv*b72-()ps60d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["shampad.me", "www.shampad.me", "localhost", "*"]
 

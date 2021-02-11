@@ -78,10 +78,14 @@
                   {# <a class="nav-link" href="{% url 'library:book_library' %}">Book shelf</a>#}
                   {# </li>#}
                 <li
-                  class="nav-item {% if request.path == '/movie/' or request.path == '/movie/custom-filter/' %}active{% endif %}">
-                  <a class="nav-link" href="{% url 'movie:watch_now' %}">Movie</a>
+                  class="nav-item {% if request.path == '/movie/' %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'movie:watch_now' %}">Movie Recommender</a>
                 </li>
-
+              {% if '/movie/' in request.path %}
+              <li class="nav-item  {% if '/custom-filter/' in request.path %}active{% endif %}">
+                  <a class="nav-link" href="{% url "movie:custom-filter" %}">Custom Filter<span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
               <li class="nav-item">
                 <li class="nav-item dropdown">
                   <a class="nav-link  {% if '/tools/' in request.path %}active

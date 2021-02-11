@@ -60,13 +60,28 @@ def custom_filter(request):
 @login_required
 def add_item(request):  # add new media
     quote = random.choice(quotes)
+    user = request.user
     if request.method == "POST":
-        form = MovieForm(request.POST)
-        if form.is_valid():
-            new_item = form.save(commit=False)
-            new_item.author = request.user
+        path = request.POST.get('path')
+        if not path:
+            # if the add request is from add item page.
+            form = MovieForm(request.POST)
+            if form.is_valid():
+                new_item = form.save(commit=False)
+                new_item.author = user
+                new_item.save()
+                return redirect('movie:movie_library')
+        else:
+            # if the request is direct from the watch now or custom filter page.
+            title = request.POST['title']
+            image_url = request.POST['img_url']
+            # year = request.POST['year']
+            rating = request.POST['rating']
+            new_item = Movie(title=title, img_url=image_url,
+                             rating=rating, author=user,
+                             watch="To watch")
             new_item.save()
-            return redirect('movie:movie_library')
+            return redirect(path)
     return render(request, 'movie/add_movie.html',
                   context={'form': MovieForm(),
                            'quote': quote})
@@ -77,17 +92,17 @@ def movie_library(request):  # movie library
     user = request.user
     quote = random.choice(quotes)
     movies = Movie.objects.filter(author=user, active=True)
-    paginator = Paginator(movies, 12)
-    page = request.GET.get('page')
-    try:
-        movies = paginator.page(page)
-    except PageNotAnInteger:
-        movies = paginator.page(1)
-    except EmptyPage:
-        movies = paginator.page(paginator.num_pages)
+    # paginator = Paginator(movies, 12)
+    # page = request.GET.get('page')
+    # try:
+    #     movies = paginator.page(page)
+    # except PageNotAnInteger:
+    #     movies = paginator.page(1)
+    # except EmptyPage:
+    #     movies = paginator.page(paginator.num_pages)
     return render(request, 'movie/library/list.html', {'movies': movies,
                                                        'quote': quote,
-                                                       'page': page,
+                                                       # 'page': page,
                                                        'total': len(movies),
                                                        })
 

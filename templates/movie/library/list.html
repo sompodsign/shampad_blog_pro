@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Movie Library{% endblock %}
+{% block title %}Wish list{% endblock %}
 {% load static %}
 
 
@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% static 'stylesheets/library/custom_style.css' %}">
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Watch list</h1>
+    <h1 class="display-4">Wish list</h1>
     <p class="lead">{{ quote }}</p>
   </div>
 </div>
@@ -73,7 +73,6 @@
 	}
 </style>
 
-
 <div class="container d-flex flex-wrap">
 	{% for movie in movies %}
 
@@ -83,25 +82,22 @@
          <a href="{% url "movie:edit_movie" id=movie.id %}">
              <i style="float: right" class="far fa-edit"></i>
          </a>
+            <a href="{% url "movie:delete_item" id=movie.id %}">
+             <i style="float: right" class="fas fa-trash"></i>
+         </a>
 			<h5 class="card-title">{{ movie.title|truncatechars:30 }}</h5>
 			<span class="movie_info">{{ movie.type }}</span>
 			<span class="movie_info float-right">
                 {% if movie.watch == "To watch" %}
                 <i title="To watch" class="fas fa-spinner"></i>
                 {% endif %}
-                <i class="fas fa-star"></i> {{ movie.rating }} / 10</span>
+                <i class="fas fa-star"></i> {{ movie.rating }}</span>
 		</div>
 	</div>
 
 	{% endfor %}
 </div>
-    <div>
-<p style="float:right; color: #ea3a60;">Total {{ total }} item{{ total|pluralize }}</p>
-</div>
-{% include 'blog/pagination.html' with page=movies %}
-
- <div class="container text-center m-5">
+     <div class="container text-center m-5">
 <a class="btn btn-primary" href="{% url "movie:add_movie" %}" class="button">Add New</a>
 </div>
-
 {% endblock %}
